@@ -1,29 +1,42 @@
-//import express from "express";
-const express = require("express");
-var path = require("path");
-const fs = require("fs");
-const app = express();
-const port = "6060";
 
+import express from "express";
+import fs from "fs";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath }  from 'url';
+import multer from "multer";
+import * as merge from "./merge.mjs";
+
+const upload = multer({dest: 'uploads/'});
+const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename)
+const port = "6060";
+  app.post('/stats', upload.any('uploaded_file'), async function  (req, res) {
+      await merge.mergeAssetsInfo(res);
+    
+      
+});
 
 app.get("/", (req, res) => {
-    res.send("SERVER LIGADO");//home screen
-});
-app.get("/pedidos", (req, res) => {
-	//Páginas de pedidos	
-});
-
-
-app.get("/api/regionais", (req, res) => {
-	res.send("R1 - Curitiba");	
-});
-
-
-app.get('/api', (req, res) => {
     fs.readFile(__dirname + '/public/index.html', 'utf8', (err, text) => {
         res.send(text);
     });
 });
+app.get("/pedidos", (req, res) => {
+
+});
+
+
+
+app.get("/api/regionais/getip/:ip", async (req, res) => {
+     fs.readFile(__dirname + "/localDB/regionais.json", 'utf8', (err, text) =>{    
+            res.send(JSON.parse(text)[JSON.parse(text).findIndex(obj => obj.ipv4 == req.params.ip)]);	
+    });
+});
+
+
+
 
 app.listen(port, () => {
     console.log("Funcionando");

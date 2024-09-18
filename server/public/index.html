@@ -4,24 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Data Manager</title>
 </head>
-
-<body>
-<style>
-	body {
-		background-color: green;
-	}
-p {
-color:white;
-font-size: 150px;
-text-align: center;
-}
-</style>
 <script>
-
+    const selectedFile = document.getElementById("csv").files;
 </script>
-<p>Este é um HTML</p>
+<body>
+  <p>Intruções: Faça o download de todos os arquivos csv do OCS dos computadores não inventáriados<br>Aperte em "Escolher Arquivos" e selecione a pasta que possua os arquivos cvs<br> Clique em enviar e você irá receber um arquivo de todas as planinhas em uma só</p>
+    <form action="/stats" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+          <input type="file" class="form-control-file" name="files[]" multiple webkitdirectory="" directory="">
+          <input type="submit" value="Enviar" class="btn btn-default">            
+        </div>
+      </form>
 </body>
 
 </html>

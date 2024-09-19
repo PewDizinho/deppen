@@ -18,7 +18,7 @@ const port = "6060";
     
       
 });
-//https://prod.liveshare.vsengsaas.visualstudio.com/join?FD1E24E1C21BEE83BF694FB0431E5852EB78
+
 app.get("/", (req, res) => {
     fs.readFile(__dirname + '/public/index.html', 'utf8', (err, text) => {
         res.send(text);

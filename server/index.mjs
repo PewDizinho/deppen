@@ -6,6 +6,7 @@ import { dirname } from "path";
 import { fileURLToPath }  from 'url';
 import multer from "multer";
 import * as merge from "./merge.mjs";
+import ping from "net-ping";
 
 const upload = multer({dest: 'uploads/'});
 const app = express();
@@ -17,14 +18,23 @@ const port = "6060";
     
       
 });
-
+//https://prod.liveshare.vsengsaas.visualstudio.com/join?FD1E24E1C21BEE83BF694FB0431E5852EB78
 app.get("/", (req, res) => {
     fs.readFile(__dirname + '/public/index.html', 'utf8', (err, text) => {
         res.send(text);
     });
 });
-app.get("/pedidos", (req, res) => {
-
+app.get("/ping/:ip", (req, res) => {
+    var session= ping.createSession();
+        var target = req.params.ip;
+        session.pingHost(target, function (err, target) {
+            if(err){
+              res.send(target + ": " + err.toString());
+            }else{
+                res.send(target + ": Alive");
+            }
+        })
+    
 });
 
 
